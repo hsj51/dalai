@@ -391,7 +391,7 @@ class Dalai {
 
     try {
       console.log("try fetching", engine.home, engine.url)
-      await git.pull({ fs, http, dir: engine.home, url: engine.url })
+      await git.fastForward({ fs, http, dir: engine.home, url: engine.url })
     } catch (e) {
       console.log("[E] Pull", e)
       try {
