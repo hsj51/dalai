@@ -251,7 +251,19 @@ class Dalai {
 
     chunks.push(`-p ${prompt}`)
 
-    const main_bin_path = platform === "win32" ? path.resolve(this.home, Core, "build", "Release", "main") : path.resolve(this.home, Core, "main")
+    const main_bin_path = path.resolve(this.home, Core, "main")
+    if( platform === "win32") {
+      if (fs.existsSync( path.resolve(this.home, Core, "build", "Release", "main.exe") )) {
+        main_bin_path = path.resolve(this.home, Core, "build", "Release", "main");
+      } else if (fs.existsSync( path.resolve(this.home, Core, "build", "Release", "llama.exe") )) {
+        main_bin_path = path.resolve(this.home, Core, "build", "Release", "llama");
+      } else if (fs.existsSync( path.resolve(this.home, Core, "build", "bin", "Release", "main.exe") )) {
+        main_bin_path = path.resolve(this.home, Core, "build", "bin", "Release", "main");
+      } else {
+        main_bin_path = path.resolve(this.home, Core, "build", "bin", "Release", "llama");
+      }
+    }
+
     this.sessionBuffer = "";
     this.bufferStarted = false;
     if (req.full) {
